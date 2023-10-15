@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .question {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+        }
+        .option {
+            margin-bottom: 5px;
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<h1 style="text-align: center;">HCI Quiz</h1>
+
+<div class="quiz-container" id="quiz-container">
+    <div class="questions">
+        <!-- Questions will be added here dynamically -->
+    </div>
+    <div>
+        <button class="btn" id="submitButton" onclick="submitQuiz()">Submit</button>
+    </div>
+</div>
+
+<script>
+    var totalMarks = 10; 
+    var score = 0;
+
+    var questions = [
+        {
+            question: "What does HCI stand for?",
+            options: ["Human-Computer Interaction", "Highly Creative Individuals", "Hardware Control Interface", "Hypertext Communication Integration"],
+            answer: 0
+        },
+        {
+            question: "Which HCI principle focuses on consistency in design?",
+            options: ["Fitts's Law", "Hick's Law", "Gestalt Principles", "Nielsen's Law"],
+            answer: 1
+        },
+        {
+            question: "Which term describes a brief interruption in the user's workflow?",
+            options: ["Feedback", "Latency", "Popup", "CogSci"],
+            answer: 2
+        },
+        {
+            question: "Which HCI concept deals with the perceived speed at which a system responds to user input?",
+            options: ["Latency", "Bandwidth", "Resolution", "Ergonomics"],
+            answer: 0
+        },
+        {
+            question: "What is the name of the design principle that suggests content should be easily discoverable for users?",
+            options: ["Affordance", "Familiarity", "Discoverability", "Accessibility"],
+            answer: 2
+        },
+        {
+            question: "Which HCI model represents the stages a user goes through when interacting with a system?",
+            options: ["Fitts's Model", "Nielsen's Model", "GOMS Model", "HCI Pyramid Model"],
+            answer: 2
+        },
+        {
+            question: "What is the term for a small, visual indicator that appears when hovering over an interactive element?",
+            options: ["Tooltip", "Indicator Dot", "Pop-up", "Flair"],
+            answer: 0
+        },
+        {
+            question: "Which HCI method involves observing users in their natural environment?",
+            options: ["Surveys", "Usability Testing", "Field Studies", "Prototyping"],
+            answer: 2
+        },
+        {
+            question: "Which HCI design principle advocates for reducing the number of choices presented to the user?",
+            options: ["Hick's Law", "Gestalt Principles", "KISS Principle", "Affordance"],
+            answer: 0
+        },
+        {
+            question: "What is the study of the relationship between humans and machines called?",
+            options: ["Anthropology", "Robotics", "Cybernetics", "Ecology"],
+            answer: 2
+        }
+    ];
+
+    function loadQuestions() {
+        var questionsHtml = '';
+        for (var i = 0; i < questions.length; i++) {
+            var q = questions[i];
+            questionsHtml += '<div class="question">' + (i + 1) + '. ' + q.question + '</div>';
+            for (var j = 0; j < q.options.length; j++) {
+                questionsHtml += '<input type="radio" name="option_' + i + '" value="' + j + '" id="option_' + i + '_' + j + '"><label for="option_' + i + '_' + j + '" class="option">' + q.options[j] + '</label><br>';
+            }
+        }
+        document.querySelector('.questions').innerHTML = questionsHtml;
+    }
+
+    function submitQuiz() {
+        for (var i = 0; i < questions.length; i++) {
+            var selectedOption = document.querySelector('input[name="option_' + i + '"]:checked');
+            if (selectedOption && parseInt(selectedOption.value) === questions[i].answer) {
+                score++;
+            }
+        }
+
+        var quizContainer = document.getElementById('quiz-container');
+        quizContainer.innerHTML = '<h2>Quiz Completed!</h2><p>Your score is: ' + score + ' out of ' + totalMarks + '</p>';
+    }
+
+    loadQuestions();
+</script>
+
+</body>
+</html>
